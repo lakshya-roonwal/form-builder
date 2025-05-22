@@ -4,7 +4,12 @@ import "@blocknote/core/fonts/inter.css";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
 import { DefaultReactSuggestionItem, useCreateBlockNote, getDefaultReactSlashMenuItems, SuggestionMenuController } from "@blocknote/react";
-import { input } from "@/components/editor/custom-components/short-answer";
+import { shortAnswer } from "@/components/editor/custom-components/short-answer";
+import { longAnswer } from "@/components/editor/custom-components/long-answer";
+import { multipleChoice } from "@/components/editor/custom-components/multi-choice";
+import { checkbox } from "@/components/editor/custom-components/checkbox";
+import { dropDown } from "@/components/editor/custom-components/dropdown";
+import { multiSelect } from "@/components/editor/custom-components/multi-select";
 import { AArrowDown } from 'lucide-react';
 import { insertShortAnswer,
   insertLongAnswer,
@@ -32,7 +37,12 @@ const FormBuilder = () => {
     const schema = BlockNoteSchema.create({
         blockSpecs: {
           ...defaultBlockSpecs,
-          input: input,
+          shortAnswer,
+          longAnswer,
+          multipleChoice,
+          checkbox,
+          dropDown,
+          multiSelect
         },
       });
       const editor = useCreateBlockNote({
@@ -43,7 +53,14 @@ const FormBuilder = () => {
             content: "Welcome to this demo!",
           },
           {
-            type: "input",
+            type: "shortAnswer",
+          },
+          {
+            type: "longAnswer",
+            content: "This is a long answer block",
+          },
+          {
+            type: "multiSelect",
           },
           {
             type: "paragraph",

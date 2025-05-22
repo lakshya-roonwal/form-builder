@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea";
 
 
 
@@ -10,9 +11,9 @@ import { ChangeEvent, useState } from "react";
  
  
 // The Alert block.
-export const shortAnswer = createReactBlockSpec(
+export const longAnswer = createReactBlockSpec(
   {
-    type: "shortAnswer",
+    type: "longAnswer",
     propSchema: {
       textAlignment: defaultProps.textAlignment,
       textColor: defaultProps.textColor,
@@ -26,16 +27,15 @@ export const shortAnswer = createReactBlockSpec(
   {
     render: (props) => {
         console.log("🚀 ~ props:", props)
-        const [data,setData] = useState('something');
-        const updateInput = (e:ChangeEvent<HTMLInputElement >) => {
+        const [data,setData] = useState(props.block.content[0].text);
+        const updateInput = (e:ChangeEvent<HTMLTextAreaElement >) => {
             setData(e.target.value);
-            props.editor.updateBlock(props.block, {type: "shortAnswer", props: {text: e.target.value}})
+            props.editor.updateBlock(props.block, {type: "longAnswer", props: {text: e.target.value}})
         }
         
       return (
         <div className={"short-answer"}>
-          {/*Icon which opens a menu to choose the Alert type*/}
-          <Input onChange={updateInput} value={data}/>
+          <Textarea onChange={updateInput} value={data}/>
         </div>
       );
     },
