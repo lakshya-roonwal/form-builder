@@ -17,6 +17,9 @@ export const longAnswer = createReactBlockSpec(
     propSchema: {
       textAlignment: defaultProps.textAlignment,
       textColor: defaultProps.textColor,
+      question: {
+        default:''
+      },
       text:{
         default : ''
       }
@@ -27,14 +30,14 @@ export const longAnswer = createReactBlockSpec(
   {
     render: (props) => {
         console.log("🚀 ~ props:", props)
-        const [data,setData] = useState(props.block.content[0].text);
+        const [data,setData] = useState('');
         const updateInput = (e:ChangeEvent<HTMLTextAreaElement >) => {
             setData(e.target.value);
             props.editor.updateBlock(props.block, {type: "longAnswer", props: {text: e.target.value}})
         }
         
       return (
-        <div className={"short-answer"}>
+        <div className={"long-answer"}>
           <Textarea onChange={updateInput} value={data}/>
         </div>
       );

@@ -1,14 +1,9 @@
-import { Input } from "@/components/ui/input"
-
-
-
+import { Input } from "@/components/ui/input";
 
 import { defaultProps } from "@blocknote/core";
 import { createReactBlockSpec } from "@blocknote/react";
 import { ChangeEvent, useState } from "react";
 
- 
- 
 // The Alert block.
 export const shortAnswer = createReactBlockSpec(
   {
@@ -16,29 +11,44 @@ export const shortAnswer = createReactBlockSpec(
     propSchema: {
       textAlignment: defaultProps.textAlignment,
       textColor: defaultProps.textColor,
-      text:{
-        default : ''
-      }
-      
+      question: {
+        default: "",
+      },
+      placeholder: {
+        default: "",
+      },
     },
-    content: "inline",
+    content: "none",
   },
   {
     render: (props) => {
-        console.log("🚀 ~ props:", props)
-        const [data,setData] = useState('something');
-        const updateInput = (e:ChangeEvent<HTMLInputElement >) => {
-            setData(e.target.value);
-            props.editor.updateBlock(props.block, {type: "shortAnswer", props: {text: e.target.value}})
-        }
-        
+      const [data, setData] = useState("");
+      const [question, setQuestion] = useState("");
+      const updateInput = (e: ChangeEvent<HTMLInputElement>) => {
+        setData(e.target.value);
+        props.editor.updateBlock(props.block, {
+          type: "shortAnswer",
+          props: { placeholder: e.target.value },
+        });
+      };
+
       return (
         <div className={"short-answer"}>
-          {/*Icon which opens a menu to choose the Alert type*/}
-          <Input onChange={updateInput} value={data}/>
+          <input
+            className="text-xl font-semibold outline-0"
+            onChange={(e) => setQuestion(e.target.value)}
+            value={question}
+            placeholder="Type a Question"
+          />
+          <Input
+            type="text"
+            name="short-answer"
+            placeholder="Type Placeholder text"
+            onChange={updateInput}
+            value={data}
+          />
         </div>
       );
     },
-  },
+  }
 );
- 
